@@ -14,23 +14,24 @@ const {
 // index
 collections.get("/", async (req, res) => {
 
-  const {overwatchId} = req.params;
-  const allCollections = await getAllCollectionsByOverwatch(overwatchId);
+  const {overwatch_id} = req.params;
+  
+  const allCollections = await getAllCollectionsByOverwatch(overwatch_id);
   if (!allCollections.error) {
     res.status(200).json(allCollections);
   } else {
-    res.status(500).json({ error: "server error" });
+    res.status(500).json({ error: "server error!!!" });
   } 
 });
 
 //show
 //GET /Album/ :id 
-collections.get("/:overwatchId", async(req, res) => {
-  const { overwatchId, collectionId } = req.params;
+collections.get("/:collection_id", async(req, res) => {
+  const { overwatch_id, collection_id } = req.params;
  
-    const collection = await getCollectionByOverwatch(overwatchId);
+    const collection = await getCollectionByOverwatch(overwatch_id, collection_id);
     if (collection.error != "error") {
-        res.status(200).json(album);
+        res.status(200).json(collection);
     } else {
         res.status(404).json({ error: "server error" });
     }
@@ -41,8 +42,8 @@ collections.get("/:overwatchId", async(req, res) => {
 //POST /album
 //localhost:3345/albums
           collections.post("/", async (req, res) => {
-            const { overwatchId } = req.params;
-            const newCollection = await createCollection(req.body, overwatchId);
+            const { overwatch_id, collection_id } = req.params;
+            const newCollection = await createCollection(req.body, overwatch_id, collection_id);
             if (!newCollection.error) {
                 res.status(200).json(newCollection);
             } else {
@@ -54,10 +55,10 @@ collections.get("/:overwatchId", async(req, res) => {
 
 //update
 
-collections.put("/:collectionId",
+collections.put("/:collection_id",
 async (req, res) => { 
-    const { overwatchId, collectionId } = req.params;
-const updatedCollection = await updateCollection(overwatchId, collectionId, req.body);
+    const { overwatch_id, collection_id } = req.params;
+const updatedCollection = await updateCollection(overwatch_id, collection_id, req.body);
 if (!updatedCollection.error) {
     res.status(200).json(updatedCollection);
 } else {
@@ -67,9 +68,9 @@ if (!updatedCollection.error) {
 
 
 
-collections.delete("/:overwatchId", async (req, res) => {
-    const { collectionId } = req.params;
-    const deletedCollection = await deleteCollection(collectionId);
+collections.delete("/:overwatch_id", async (req, res) => {
+    const { collection_id } = req.params;
+    const deletedCollection = await deleteCollection(collection_id);
     if (!deletedCollection.error) {
         res.status(200).json(deletedAlbum);
     } else {

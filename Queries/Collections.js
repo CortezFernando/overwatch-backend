@@ -2,16 +2,16 @@ const db =  require("../db/dbConfig.js");
 
 const getAllCollectionsByOverwatch = async (id) => {
   try {
-    const allCollections = await db.any("SELECT * FROM collections where overwatch_id= $1",[id]);
+    const allCollections = await db.any("SELECT * FROM collections where overwatch_id= $1", [id]);
     return allCollections;
   } catch (err) {
-    return err;
+    return {error: "error"}; //object error : key value of error
   }
 };
 
 const getCollectionByOverwatch = async (overwatchId, collectionId) => {
   try {
-    const collection = await db.one("SELECT * FROM collections WHERE overwatch_id = $1 and song_id=$2", [overwatchId,collectionId]);
+    const getCollectionByOverwatch = await db.one("SELECT * FROM collections WHERE overwatch_id = $1 and collection_id=$2", [overwatchId, collectionId]);
     
     return getCollectionByOverwatch;
   } catch (error) {
@@ -41,7 +41,7 @@ const createCollection = async (collection, overwatchId) => {
   
  const deleteCollection = async (id) => {
     try {
-      const deletedCollection = await db.one(`DELETE FROM collections WHERE collection_id = $1 RETURNING *`, [id]);
+      const deletedCollection = await db.one(`DELETE FROM collections WHERE overwatch_id = $1 RETURNING *`, [id]);
       return deletedCollection;
     } catch (err) {
       return {error: "error"}; 
