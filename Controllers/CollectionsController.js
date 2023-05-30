@@ -25,7 +25,7 @@ collections.get("/", async (req, res) => {
 });
 
 //show
-//GET /Album/ :id 
+//GET /Overwatch/ :id 
 collections.get("/:collection_id", async(req, res) => {
   const { overwatch_id, collection_id } = req.params;
  
@@ -38,9 +38,9 @@ collections.get("/:collection_id", async(req, res) => {
 });
 
   
-//create one album ----> insert into albums
-//POST /album
-//localhost:3345/albums
+//create one collection ---> insert into overwatchHero
+//POST /OverwatchHero/:id/collections
+//localhost:3345/overwatch
           collections.post("/", async (req, res) => {
             const { overwatch_id, collection_id } = req.params;
             const newCollection = await createCollection(req.body, overwatch_id, collection_id);
